@@ -1,47 +1,25 @@
 import { motion } from 'framer-motion';
-
 export function About() {
   return (
-    <div className="min-h-screen py-16 px-4 bg-[#f8fafc]">
-      <div className="max-w-4xl mx-auto text-center">
-        <motion.h1 
-          className="text-4xl md:text-5xl font-extrabold mb-6 text-[#1d4ed8] font-plex-sans"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-        >
-          About LexiSuite
-        </motion.h1>
-        <motion.p
-          className="text-slate-700 text-lg max-w-2xl mx-auto mb-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.7 }}
-        >
-          LexiSuite is on a mission to empower legal professionals with cutting-edge, collaborative technology. We believe law firms of all sizes deserve modern, secure, and joyful tools. Our platform is designed by legal minds for legal teams who demand efficiency, trust, and peace of mind.
-        </motion.p>
-        <div className="flex flex-col md:flex-row gap-8 justify-center mt-10">
-          <motion.div 
-            className="bg-white rounded-xl p-8 shadow border-t-4 border-[#1d4ed8] flex-1"
-            whileHover={{ scale: 1.03 }}
-          >
-            <h2 className="font-bold text-xl mb-2 text-[#1d4ed8]">Our Vision</h2>
-            <p className="text-slate-600">To set the gold standard for secure, collaborative, and intuitive legal practice management worldwide.</p>
-          </motion.div>
-          <motion.div 
-            className="bg-white rounded-xl p-8 shadow border-t-4 border-[#1d4ed8] flex-1"
-            whileHover={{ scale: 1.03 }}
-          >
-            <h2 className="font-bold text-xl mb-2 text-[#1d4ed8]">Why LexiSuite?</h2>
-            <ul className="text-slate-600 text-left list-disc list-inside">
-              <li>Best-in-class security</li>
-              <li>Intuitive, role-based interface</li>
-              <li>Lightning-fast onboarding</li>
-              <li>World-class client experience</li>
-            </ul>
-          </motion.div>
-        </div>
-      </div>
-    </div>
+    <main className="min-h-screen bg-gradient-to-tl from-[#e0e7ef] via-white to-[#e0e7ef]">
+      <section className="max-w-3xl mx-auto py-20 px-4">
+        <motion.div initial={{opacity: 0, y: 30}} animate={{opacity: 1, y: 0}} transition={{duration: 0.7}}>
+          <h1 className="font-bold text-4xl text-[#1d4ed8] mb-4 font-heading" style={{ fontFamily: 'IBM Plex Sans, sans-serif', fontWeight: 700 }}>About JustiFlow</h1>
+          <p className="text-lg text-slate-700 mb-10">JustiFlow is the digital command center for modern legal professionals and their clients. We believe managing legal work should be secure, collaborative, and—dare we say—enjoyable. Built by a team of legal tech enthusiasts with a penchant for pixel-perfect UX, we’re here to streamline your firm’s workflow while keeping it friendly and approachable.</p>
+          <div className="flex flex-col md:flex-row gap-10 mt-8">
+            <div className="flex-1 bg-white rounded-xl shadow-lg p-6 text-center">
+              <img src="/branding/assets/logo-1.png" className="w-14 h-14 mx-auto mb-3" />
+              <h2 className="font-bold text-xl mb-2">Our Mission</h2>
+              <p className="text-slate-600">Empower law firms and clients with tools that foster transparency, trust, and efficiency—without sacrificing security or user experience.</p>
+            </div>
+            <div className="flex-1 bg-white rounded-xl shadow-lg p-6 text-center">
+              <img src="/branding/assets/logo-0.png" className="w-14 h-14 mx-auto mb-3" />
+              <h2 className="font-bold text-xl mb-2">Our Voice</h2>
+              <p className="text-slate-600">Professional, warm, and always rooting for your success. We speak your language—whether you’re a seasoned partner, a busy paralegal, or a client eager for clarity.</p>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+    </main>
   );
 }
