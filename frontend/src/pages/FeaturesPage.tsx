@@ -1,65 +1,81 @@
 import { motion } from 'framer-motion';
-import { ShieldCheck, CalendarDays, FileText, Users, MessageCircle, DollarSign } from 'lucide-react';
-
-const features = [
-  {
-    icon: <ShieldCheck className="text-[#1d4ed8] w-8 h-8 mb-3" />,
-    title: 'Bank-Grade Security',
-    desc: 'All your data is encrypted and protected to the highest standards, ensuring attorney-client privilege and peace of mind.'
-  },
-  {
-    icon: <CalendarDays className="text-[#1d4ed8] w-8 h-8 mb-3" />,
-    title: 'Smart Calendar & Deadlines',
-    desc: 'Never miss a hearing or deadline. Automated reminders, conflict checks, and team scheduling keep your firm on track.'
-  },
-  {
-    icon: <FileText className="text-[#1d4ed8] w-8 h-8 mb-3" />,
-    title: 'Robust Document Management',
-    desc: 'Upload, organize, and version all case files with audit trails and client-sharing controls.'
-  },
-  {
-    icon: <Users className="text-[#1d4ed8] w-8 h-8 mb-3" />,
-    title: 'Team & Role Management',
-    desc: 'Granular, role-based access for attorneys, paralegals, admin staff, and clients.'
-  },
-  {
-    icon: <MessageCircle className="text-[#1d4ed8] w-8 h-8 mb-3" />,
-    title: 'Secure Messaging',
-    desc: 'Built-in secure messaging and communication logs with instant notifications.'
-  },
-  {
-    icon: <DollarSign className="text-[#1d4ed8] w-8 h-8 mb-3" />,
-    title: 'Billing, Expenses & Invoicing',
-    desc: 'Integrated time tracking, expense management, and invoice generation for streamlined billing.'
-  },
-];
+import { CheckCircle, Lock, FolderKanban, CalendarCheck, Users, DollarSign, MessageCircle, ShieldCheck } from 'lucide-react';
 
 export function FeaturesPage() {
+  const features = [
+    {
+      icon: <FolderKanban className="w-8 h-8 text-[#1d4ed8]" />, 
+      title: 'Case Management',
+      desc: 'Organize, track, and view all your cases in one secure location with powerful search and filtering.'
+    },
+    {
+      icon: <CalendarCheck className="w-8 h-8 text-[#1d4ed8]" />,
+      title: 'Calendar & Deadlines',
+      desc: 'Automated reminders, court date scheduling, and deadline tracking—all in a collaborative calendar.'
+    },
+    {
+      icon: <Lock className="w-8 h-8 text-[#1d4ed8]" />,
+      title: 'Encrypted Client Portal',
+      desc: 'Confidential document sharing and messaging, with end-to-end encryption to safeguard attorney-client privilege.'
+    },
+    {
+      icon: <Users className="w-8 h-8 text-[#1d4ed8]" />,
+      title: 'Role-Based Access',
+      desc: 'Granular permissions for attorneys, paralegals, admins, and clients. Stay secure and compliant at all times.'
+    },
+    {
+      icon: <MessageCircle className="w-8 h-8 text-[#1d4ed8]" />,
+      title: 'Secure Messaging',
+      desc: 'Integrated communication logs and secure chat to keep all parties up to date.'
+    },
+    {
+      icon: <DollarSign className="w-8 h-8 text-[#1d4ed8]" />,
+      title: 'Billing & Time Tracking',
+      desc: 'Track billable hours, manage expenses, and generate invoices—transparently and efficiently.'
+    },
+    {
+      icon: <ShieldCheck className="w-8 h-8 text-[#1d4ed8]" />,
+      title: 'Compliance & Security',
+      desc: 'Full encryption, audit trails, and compliance tools to uphold the highest legal standards.'
+    },
+    {
+      icon: <CheckCircle className="w-8 h-8 text-[#1d4ed8]" />,
+      title: 'Workflow & Task Management',
+      desc: 'Assign tasks, track progress, and collaborate with your team—never miss a beat.'
+    },
+  ];
   return (
-    <div className="min-h-[60vh] bg-white py-16 px-4">
-      <div className="max-w-7xl mx-auto">
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl font-bold text-[#1d4ed8] mb-10 text-center"
-          style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
+    <div className="min-h-screen bg-slate-50 py-12">
+      <div className="max-w-7xl mx-auto px-4">
+        <motion.h1 
+          initial={{opacity: 0, y: 30}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.7}}
+          className="text-4xl font-extrabold mb-4 text-[#1d4ed8] text-center font-['IBM Plex Sans']"
         >
-          Powerful Features for Modern Legal Teams
+          Everything a Modern Law Firm Needs
         </motion.h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((f, i) => (
-            <motion.div
-              key={f.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 * i, duration: 0.5 }}
-              className="rounded-xl bg-slate-50 border border-slate-200 shadow-md p-8 flex flex-col items-center text-center hover:shadow-xl group"
+        <motion.p 
+          initial={{opacity: 0, y: 24}}
+          animate={{opacity: 1, y: 0}}
+          transition={{delay: 0.2, duration: 0.7}}
+          className="text-slate-600 text-center max-w-2xl mx-auto mb-12 text-lg"
+        >
+          LegalEase Case Manager is your all-in-one platform for secure, collaborative, and efficient case management—engineered for legal professionals by legal professionals.
+        </motion.p>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((feat, idx) => (
+            <motion.div 
+              key={feat.title}
+              initial={{opacity: 0, y: 40}} 
+              whileInView={{opacity: 1, y: 0}}
+              transition={{delay: idx * 0.08, duration: 0.5}}
+              viewport={{once: true}}
+              className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center border-t-4 border-[#1d4ed8]"
             >
-              {f.icon}
-              <div className="font-bold text-lg text-slate-800 mb-2 group-hover:text-[#1d4ed8] transition-colors">{f.title}</div>
-              <div className="text-slate-600 text-base">{f.desc}</div>
+              <div className="mb-3">{feat.icon}</div>
+              <h3 className="font-bold text-lg mb-2 text-slate-900">{feat.title}</h3>
+              <p className="text-slate-600 text-center">{feat.desc}</p>
             </motion.div>
           ))}
         </div>

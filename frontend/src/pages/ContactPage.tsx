@@ -5,60 +5,54 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
 export function ContactPage() {
-  const [submitted, setSubmitted] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    setForm(f => ({ ...f, [e.target.name]: e.target.value }));
+  }
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setSent(true);
+    setForm({ name: '', email: '', message: '' });
+  }
 
   return (
-    <div className="min-h-[60vh] bg-slate-50 py-16 px-4">
-      <div className="max-w-lg mx-auto bg-white rounded-2xl shadow-lg p-10 border-t-4 border-[#1d4ed8]">
-        <motion.h1
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-3xl font-bold text-[#1d4ed8] mb-4 text-center"
-          style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
-        >
-          Contact LegalEase
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="text-base text-center text-slate-600 mb-6"
-        >
-          Questions? Curious about LegalEase? Drop us a note and our legal tech wizards will be in touch.
-        </motion.p>
-        {submitted ? (
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 py-16 px-2">
+      <motion.div
+        className="bg-white rounded-2xl shadow-xl max-w-lg w-full p-10 border-t-4 border-[#1d4ed8]"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <h1 className="text-2xl font-bold mb-3 text-[#1d4ed8] text-center">Contact LegalEase</h1>
+        <p className="mb-6 text-slate-600 text-center">Have a question, feedback, or want a demo? Our team is ready to help!</p>
+        {sent ? (
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="text-center text-green-600 font-semibold py-8"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-green-600 text-center text-lg font-semibold py-8"
           >
-            Thank you! We'll get back to you soon.
+            Thank you for reaching out! We'll be in touch soon.
           </motion.div>
         ) : (
-          <form
-            className="space-y-5"
-            onSubmit={e => {
-              e.preventDefault();
-              setSubmitted(true);
-            }}
-          >
+          <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="contact-name" className="block text-sm font-medium text-slate-700 mb-1">Name</label>
-              <Input id="contact-name" name="name" required placeholder="Your Name" />
+              <label htmlFor="contact-name" className="block text-slate-700 font-semibold mb-1">Name</label>
+              <Input id="contact-name" name="name" value={form.name} onChange={handleChange} required autoComplete="name" placeholder="Your Name" />
             </div>
             <div>
-              <label htmlFor="contact-email" className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-              <Input id="contact-email" name="email" type="email" required placeholder="your@email.com" />
+              <label htmlFor="contact-email" className="block text-slate-700 font-semibold mb-1">Email</label>
+              <Input id="contact-email" type="email" name="email" value={form.email} onChange={handleChange} required autoComplete="email" placeholder="you@email.com" />
             </div>
             <div>
-              <label htmlFor="contact-message" className="block text-sm font-medium text-slate-700 mb-1">Message</label>
-              <Textarea id="contact-message" name="message" required placeholder="How can we help?" rows={4} />
+              <label htmlFor="contact-message" className="block text-slate-700 font-semibold mb-1">Message</label>
+              <Textarea id="contact-message" name="message" value={form.message} onChange={handleChange} required placeholder="How can we help?" rows={4} />
             </div>
-            <Button id="contact-submit-btn" type="submit" className="w-full bg-[#1d4ed8] text-white font-bold py-2 px-6">Send Message</Button>
+            <Button type="submit" id="contact-send-btn" className="bg-[#1d4ed8] text-white font-bold hover:bg-[#1e40af]">Send Message</Button>
           </form>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 }
