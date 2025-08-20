@@ -4,35 +4,34 @@ import { Link } from 'react-router-dom';
 
 export function Hero() {
   return (
-    <section className="relative">
-      <div
-        style={{ backgroundImage: "url('/branding/assets/hero-0.png')" }}
-        className="bg-cover bg-center h-[34rem] w-full"
-      >
-        <div className="bg-black bg-opacity-60 h-full flex items-center justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
+    <div style={{ backgroundImage: "url('/branding/assets/hero-0.png')" }} className="bg-cover bg-center h-[420px] w-full relative">
+      <div className="bg-black bg-opacity-60 h-full flex items-center justify-center">
+        <div className="max-w-3xl w-full px-6 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center text-white max-w-2xl"
+            transition={{ duration: 1 }}
+            className="text-white text-4xl md:text-5xl font-bold mb-4 drop-shadow-xl font-[700]"
+            style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
           >
-            <h1 className="text-5xl font-bold mb-6 font-[700]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
-              Collaborate. Secure. Win.<br />Legal Workflow, Reinvented.
-            </h1>
-            <p className="text-lg font-normal mb-8 font-[400]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
-              Welcome to CaseCollab, your legal team's digital command center. Effortless case management, seamless teamwork, client trust. All in one secure platform.
-            </p>
-            <div className="flex justify-center gap-4">
-              <Button asChild size="lg" className="bg-[#1d4ed8] text-white hover:bg-[#1e40af] px-7 py-5 text-lg font-bold" id="get-started-btn">
-                <Link to="/signup">Get Started</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-[#1d4ed8] px-7 py-5 text-lg font-bold" id="learn-more-btn">
-                <Link to="/features">Learn More</Link>
-              </Button>
-            </div>
+            LegalEase Case Manager
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, delay: 0.2 }}
+            className="text-white text-lg md:text-xl mb-6 font-[400] drop-shadow-lg"
+            style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
+          >
+            The all-in-one platform for case tracking, deadline management, secure client portals, and legal team collaboration.
+          </motion.p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2, delay: 0.4 }}>
+            <Button asChild size="lg" className="bg-[#1d4ed8] text-white px-8 py-5 text-lg font-bold shadow-xl" id="hero-cta-btn">
+              <Link to="/signup">Get Started for Free</Link>
+            </Button>
           </motion.div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
