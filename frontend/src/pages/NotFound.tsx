@@ -1,18 +1,23 @@
-import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 
-export function NotFound() {
+export const NotFound = () => {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-[#e0e7ef] px-6">
-      <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
-        <img src="/branding/assets/logo-2.png" className="w-24 h-24 mx-auto mb-4" />
-        <h1 className="font-bold text-5xl text-[#1d4ed8] mb-2 font-heading">404</h1>
-        <p className="text-xl text-slate-600 mb-6">Lost in legal limbo? This page doesn’t exist.</p>
-        <Button asChild id="return-home" className="bg-[#1d4ed8] text-white text-lg hover:bg-blue-800">
-          <Link to="/">Back to Home</Link>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="text-center"
+      >
+        <img src="/branding/assets/logo-1.png" className="w-24 h-24 mx-auto mb-4" />
+        <h1 className="text-6xl font-bold text-blue-800 mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif', fontWeight: 700 }}>404</h1>
+        <p className="text-2xl text-slate-700 mb-6">Lost in litigation? This page does not exist.</p>
+        <Button asChild id="notfound-home" className="bg-blue-700 text-white px-6 py-3 text-lg">
+          <Link to="/">Return to Homepage</Link>
         </Button>
       </motion.div>
-    </main>
+    </div>
   );
-}
+};
