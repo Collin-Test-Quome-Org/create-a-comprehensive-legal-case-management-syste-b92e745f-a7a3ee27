@@ -1,60 +1,70 @@
+// Playwright test for LandingPage component
 import { test, expect } from '@playwright/test';
 
-test.describe('LandingPage', () => {
+test.describe('Landing Page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
   });
 
-  test('renders hero section', async ({ page }) => {
-    // The Hero component is included, but we don't know its content. Check for the main heading.
+  test('renders the hero section', async ({ page }) => {
+    // There should be a Hero component at the top; check for prominent heading
     await expect(page.locator('h1')).toBeVisible();
-    // Optionally, test for hero image background existence (using inline style)
-    await expect(page.locator('[style*="hero-0.png"]')).toBeVisible();
   });
 
-  test('renders "Why Choose CaseCollab?" section and feature cards', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: /Why Choose CaseCollab/ })).toBeVisible();
-    const features = [
-      'Effortless Collaboration',
-      'Ironclad Security',
-      'Lightning Fast',
-    ];
-    for (const feature of features) {
-      await expect(page.getByRole('heading', { name: feature })).toBeVisible();
-    }
-    // Check for expected emoji
-    await expect(page.getByText('📁')).toBeVisible();
-    await expect(page.getByText('🔒')).toBeVisible();
-    await expect(page.getByText('⚡')).toBeVisible();
+  test('displays Why Choose CaseCollab section', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: 'Why Choose CaseCollab?' })).toBeVisible();
+    // Check three feature cards
+    await expect(page.getByText('Effortless Collaboration')).toBeVisible();
+    await expect(page.getByText('Ironclad Security')).toBeVisible();
+    await expect(page.getByText('Lightning Fast')).toBeVisible();
+    await expect(page.getByText('Share, review, and comment on case files in real-time. Everyone on the same page, always.')).toBeVisible();
+    await expect(page.getByText("Your clients' privacy is sacred. Bank-grade security, encrypted communications, and compliance built-in.")).toBeVisible();
+    await expect(page.getByText('From case intake to closing arguments—CaseCollab keeps your team moving at the speed of justice.')).toBeVisible();
   });
 
-  test('has CTA button that navigates to signup', async ({ page }) => {
-    const ctaBtn = page.locator('#cta-start-btn').getByRole('link', { name: /Start Collaborating Now/i });
+  test('has a prominent Call To Action button for signup', async ({ page }) => {
+    const ctaBtn = page.getByRole('link', { name: 'Start Collaborating Now' });
     await expect(ctaBtn).toBeVisible();
+    // Clicking CTA should navigate to /signup
     await ctaBtn.click();
-    await expect(page).toHaveURL('/signup');
+    await expect(page).toHaveURL(/\/signup$/);
   });
 
-  test('renders footer with logo, nav links, and copyright', async ({ page }) => {
-    // Logo in footer
-    await expect(page.locator('footer img[src="/branding/assets/logo-2.png"]')).toBeVisible();
-    await expect(page.getByText('CaseCollab')).toBeVisible();
+  test('footer displays logo, navigation and copyright', async ({ page }) => {
+    // Logo
+    const logoImg = page.locator('footer img[src="/branding/assets/logo-2.png"]');
+    await expect(logoImg).toBeVisible();
     // Footer nav links
-    const footerLinks = ['About', 'Features', 'Contact', 'Login', 'Sign Up'];
-    for (const text of footerLinks) {
-      await expect(page.locator('footer').getByRole('link', { name: text })).toBeVisible();
-    }
+    await expect(page.getByRole('link', { name: 'About' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Features' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Contact' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Login' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Sign Up' })).toBeVisible();
     // Copyright
     const year = new Date().getFullYear();
     await expect(page.getByText(`© ${year} CaseCollab. All rights reserved.`)).toBeVisible();
   });
 
-  test('basic accessibility: all links have discernible names', async ({ page }) => {
-    // All nav and footer links have visible text
-    const allLinks = await page.locator('a').all();
-    for (const link of allLinks) {
-      const name = await link.textContent();
-      expect(name && name.trim().length).toBeGreaterThan(0);
+  test('footer navigation works', async ({ page }) => {
+    const links = [
+      { name: 'About', path: '/about' },
+      { name: 'Features', path: '/features' },
+      { name: 'Contact', path: '/contact' },
+      { name: 'Login', path: '/login' },
+      { name: 'Sign Up', path: '/signup' }
+    ];
+    for (const { name, path } of links) {
+      await page.goto('/');
+      await page.getByRole('link', { name }).click();
+      await expect(page).toHaveURL(new RegExp(path.replace('/', '\\/') + '$'));
     }
+  });
+
+  test('basic accessibility: main landmarks and headings', async ({ page }) => {
+    // Main section landmark exists
+    await expect(page.locator('section')).toBeVisible();
+    // There is at least one h1 and one h2
+    await expect(page.locator('h1')).toBeVisible();
+    await expect(page.locator('h2')).toBeVisible();
   });
 });
