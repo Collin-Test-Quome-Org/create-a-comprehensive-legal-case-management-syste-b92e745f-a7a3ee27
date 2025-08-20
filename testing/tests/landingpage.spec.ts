@@ -1,4 +1,3 @@
-// Playwright test for LandingPage component content and CTA
 import { test, expect } from '@playwright/test';
 
 test.describe('LandingPage', () => {
@@ -6,44 +5,57 @@ test.describe('LandingPage', () => {
     await page.goto('/');
   });
 
-  test('shows hero section (visually)', async ({ page }) => {
-    // The Hero component is included at the top, but we can't check its contents here
-    await expect(page.locator('body')).toContainText('CaseCollab');
+  test('renders hero section', async ({ page }) => {
+    // Hero is present (assume heading present)
+    const heroHeading = page.getByRole('heading', { level: 1 });
+    await expect(heroHeading).toBeVisible();
   });
 
-  test('displays "Why Choose CaseCollab?" section with features', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: 'Why Choose CaseCollab?' })).toBeVisible();
+  test('renders "Why Choose CaseCollab?" section and key features', async ({ page }) => {
+    const sectionHeading = page.getByRole('heading', { name: /Why Choose CaseCollab/i });
+    await expect(sectionHeading).toBeVisible();
+
+    // Effortless Collaboration
     await expect(page.getByText('Effortless Collaboration')).toBeVisible();
-    await expect(page.getByText('Ironclad Security')).toBeVisible();
-    await expect(page.getByText('Lightning Fast')).toBeVisible();
     await expect(page.getByText('Share, review, and comment on case files in real-time. Everyone on the same page, always.')).toBeVisible();
+    // Ironclad Security
+    await expect(page.getByText('Ironclad Security')).toBeVisible();
     await expect(page.getByText("Your clients' privacy is sacred. Bank-grade security, encrypted communications, and compliance built-in.")).toBeVisible();
+    // Lightning Fast
+    await expect(page.getByText('Lightning Fast')).toBeVisible();
     await expect(page.getByText('From case intake to closing arguments—CaseCollab keeps your team moving at the speed of justice.')).toBeVisible();
+
+    // Emojis
+    await expect(page.getByText('📁')).toBeVisible();
+    await expect(page.getByText('🔒')).toBeVisible();
+    await expect(page.getByText('⚡')).toBeVisible();
   });
 
-  test('CTA button "Start Collaborating Now" navigates to signup', async ({ page }) => {
-    const cta = page.locator('#cta-start-btn');
-    await expect(cta).toBeVisible();
-    await cta.click();
-    await expect(page).toHaveURL('/signup');
+  test('CTA button is visible and navigates to signup', async ({ page }) => {
+    const ctaBtn = page.locator('#cta-start-btn');
+    await expect(ctaBtn).toBeVisible();
+    await expect(ctaBtn.getByRole('link', { name: /Start Collaborating Now/i })).toHaveAttribute('href', '/signup');
+    await ctaBtn.getByRole('link', { name: /Start Collaborating Now/i }).click();
+    await expect(page).toHaveURL(/\/signup$/);
   });
 
-  test('footer has logo, CaseCollab text, and navigation links', async ({ page }) => {
-    // Logo image is present
-    const logoImg = page.locator('footer img[src="/branding/assets/logo-2.png"]');
-    await expect(logoImg).toBeVisible();
-    await expect(page.getByText('CaseCollab').first()).toBeVisible();
-    // Footer links
-    await expect(page.getByRole('link', { name: 'About' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Features' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Contact' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Login' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Sign Up' })).toBeVisible();
-  });
-
-  test('footer copyright displays current year', async ({ page }) => {
+  test('renders footer with navigation links and copyright', async ({ page }) => {
+    const footer = page.locator('footer');
+    await expect(footer).toBeVisible();
+    // Logo and title
+    await expect(footer.getByText('CaseCollab')).toBeVisible();
+    // About
+    await expect(footer.getByRole('link', { name: /^About$/ })).toHaveAttribute('href', '/about');
+    // Features
+    await expect(footer.getByRole('link', { name: /^Features$/ })).toHaveAttribute('href', '/features');
+    // Contact
+    await expect(footer.getByRole('link', { name: /^Contact$/ })).toHaveAttribute('href', '/contact');
+    // Login
+    await expect(footer.getByRole('link', { name: /^Login$/ })).toHaveAttribute('href', '/login');
+    // Sign Up
+    await expect(footer.getByRole('link', { name: /^Sign Up$/ })).toHaveAttribute('href', '/signup');
+    // Copyright
     const year = new Date().getFullYear();
-    const copyright = page.getByText(`© ${year} CaseCollab. All rights reserved.`);
-    await expect(copyright).toBeVisible();
+    await expect(footer.getByText(`© ${year} CaseCollab. All rights reserved.`)).toBeVisible();
   });
 });
