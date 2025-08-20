@@ -1,101 +1,93 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function Home() {
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <section
+    <div className="min-h-screen bg-gradient-to-br from-[#e5e9f8] to-[#f8fafc]">
+      {/* Hero Section */}
+      <div
         style={{ backgroundImage: "url('/branding/assets/hero-0.png')" }}
-        className="bg-cover bg-center h-[430px] w-full relative"
+        className="relative bg-cover bg-center h-[32rem] flex items-center justify-center"
       >
-        <div className="bg-black bg-opacity-60 h-full flex items-center justify-center">
-          <motion.div 
-            className="text-center px-6"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9 }}
-          >
-            <h1 className="font-bold text-4xl md:text-5xl text-white mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif', fontWeight: 700 }}>
-              Welcome to CasePilot
-            </h1>
-            <p className="text-xl text-slate-100 max-w-xl mx-auto mb-8" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
-              Effortless case management, secure collaboration, and smart automation for modern law practices. From intake to verdict, CasePilot's got your back.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button asChild id="cta-get-started" className="text-lg px-8 py-6 bg-[#1d4ed8] hover:bg-blue-800">
-                <Link to="/signup">Get Started</Link>
-              </Button>
-              <Button asChild id="cta-demo" variant="outline" className="text-lg px-8 py-6 border-white text-white hover:text-[#1d4ed8] hover:bg-white bg-transparent">
-                <Link to="/login">Live Demo</Link>
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-      <main className="flex-grow bg-white py-16">
+        <div className="absolute inset-0 bg-black bg-opacity-50" />
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          className="relative z-10 max-w-3xl mx-auto px-8 text-center"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="max-w-6xl mx-auto px-4"
         >
-          <h2 className="text-3xl font-bold mb-8 text-[#1d4ed8]" style={{ fontFamily: 'IBM Plex Sans, sans-serif', fontWeight: 700 }}>
-            Your Law Practice, Streamlined
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-[#f8fafc] rounded-xl shadow-md p-6 flex flex-col items-center">
-              <div className="rounded-full bg-[#1d4ed8] p-4 mb-4">
-                <svg width="32" height="32" stroke="white" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M16 3v4a1 1 0 0 0 1 1h4"/></svg>
-              </div>
-              <h3 className="font-bold text-xl mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif', fontWeight: 700 }}>Case Dashboard</h3>
-              <p className="text-slate-600 text-center">View, track, and organize all your cases in one intuitive dashboard, so you never miss a detail.</p>
-            </div>
-            <div className="bg-[#f8fafc] rounded-xl shadow-md p-6 flex flex-col items-center">
-              <div className="rounded-full bg-[#1d4ed8] p-4 mb-4">
-                <svg width="32" height="32" stroke="white" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><path d="M8 6v6l4 2"/><circle cx="12" cy="12" r="10"/></svg>
-              </div>
-              <h3 className="font-bold text-xl mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif', fontWeight: 700 }}>Smart Deadlines</h3>
-              <p className="text-slate-600 text-center">Automated reminders and scheduling keep your court dates, filings, and meetings on track and on time.</p>
-            </div>
-            <div className="bg-[#f8fafc] rounded-xl shadow-md p-6 flex flex-col items-center">
-              <div className="rounded-full bg-[#1d4ed8] p-4 mb-4">
-                <svg width="32" height="32" stroke="white" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3h-1a2 2 0 0 0-2 2v2h5V5a2 2 0 0 0-2-2z"/></svg>
-              </div>
-              <h3 className="font-bold text-xl mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif', fontWeight: 700 }}>Secure Messaging</h3>
-              <p className="text-slate-600 text-center">Collaborate with your team and clients securely, with encrypted messaging and document sharing.</p>
-            </div>
+          <h1 className="text-white font-extrabold text-5xl md:text-6xl mb-6 font-plex-sans">
+            Empowering Legal Teams, <span className="text-[#1d4ed8]">Effortlessly.</span>
+          </h1>
+          <p className="text-slate-200 text-xl mb-8 max-w-2xl mx-auto">
+            Welcome to <span className="font-bold">LexiSuite</span> – the all-in-one law firm productivity platform. Streamline cases, collaborate securely, delight clients, and never miss a deadline. Your legal operations, reimagined.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/signup">
+              <Button id="hero-cta-signup" size="lg" className="bg-[#1d4ed8] hover:bg-[#2563eb] text-white text-lg font-bold px-8 py-6 shadow-lg">
+                Get Started Free <ArrowRight className="inline ml-2 w-5 h-5" />
+              </Button>
+            </Link>
+            <Link to="/login">
+              <Button id="hero-cta-login" variant="outline" size="lg" className="text-white border-white text-lg px-8 py-6 bg-transparent hover:bg-white/10">
+                Log In
+              </Button>
+            </Link>
           </div>
+        </motion.div>
+      </div>
+      {/* Features Section */}
+      <section className="max-w-6xl mx-auto py-20 px-4 grid md:grid-cols-3 gap-10">
+        <motion.div 
+          className="bg-white rounded-xl shadow-md p-8 flex flex-col items-center border-t-4 border-[#1d4ed8]"
+          whileHover={{ scale: 1.04, boxShadow: '0 8px 32px #1d4ed833' }}
+        >
+          <div className="bg-[#1d4ed8]/10 rounded-full w-14 h-14 flex items-center justify-center mb-4">
+            <svg className="w-8 h-8 text-[#1d4ed8]" stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24"><path d="M16 2v6a2 2 0 002 2h6" /><rect x="2" y="8" width="20" height="14" rx="2" /><path d="M18 22V12" /></svg>
+          </div>
+          <h3 className="font-bold text-xl mb-2 text-slate-900">Case Management</h3>
+          <p className="text-slate-600 text-center">Track, organize, and search all your cases from a single secure dashboard. Assign roles, set permissions, and never lose sight of what's next.</p>
         </motion.div>
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="max-w-6xl mx-auto px-4 mt-24"
+          className="bg-white rounded-xl shadow-md p-8 flex flex-col items-center border-t-4 border-[#1d4ed8]"
+          whileHover={{ scale: 1.04, boxShadow: '0 8px 32px #1d4ed833' }}
         >
-          <h2 className="text-3xl font-bold mb-8 text-[#1d4ed8]" style={{ fontFamily: 'IBM Plex Sans, sans-serif', fontWeight: 700 }}>
-            Why Choose CasePilot?
-          </h2>
-          <div className="grid md:grid-cols-2 gap-10">
-            <div className="rounded-xl bg-[#e0e7ef] p-8 shadow flex flex-col h-full">
-              <div className="flex items-center gap-3 mb-3">
-                <svg width="24" height="24" className="text-[#1d4ed8]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
-                <span className="font-semibold text-lg">Effortless Onboarding</span>
-              </div>
-              <p className="text-slate-700">Get started in minutes. Our guided setup helps you import your cases and invite your team with zero headaches.</p>
-            </div>
-            <div className="rounded-xl bg-[#e0e7ef] p-8 shadow flex flex-col h-full">
-              <div className="flex items-center gap-3 mb-3">
-                <svg width="24" height="24" className="text-[#1d4ed8]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16"/><path d="M9 4v16"/></svg>
-                <span className="font-semibold text-lg">Security First</span>
-              </div>
-              <p className="text-slate-700">Military-grade encryption ensures your sensitive data stays private, always. Compliance and protection, built in.</p>
-            </div>
+          <div className="bg-[#1d4ed8]/10 rounded-full w-14 h-14 flex items-center justify-center mb-4">
+            <svg className="w-8 h-8 text-[#1d4ed8]" stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 20h9" /><path d="M12 4h9" /><path d="M4 9V7a2 2 0 012-2h8a2 2 0 012 2v2" /><rect x="4" y="13" width="16" height="6" rx="2" /><path d="M6 17v-2" /></svg>
           </div>
+          <h3 className="font-bold text-xl mb-2 text-slate-900">Document Vault</h3>
+          <p className="text-slate-600 text-center">Securely upload, organize, and share legal documents. Version control, e-signatures, and ultra-fast search built in.</p>
         </motion.div>
-      </main>
+        <motion.div
+          className="bg-white rounded-xl shadow-md p-8 flex flex-col items-center border-t-4 border-[#1d4ed8]"
+          whileHover={{ scale: 1.04, boxShadow: '0 8px 32px #1d4ed833' }}
+        >
+          <div className="bg-[#1d4ed8]/10 rounded-full w-14 h-14 flex items-center justify-center mb-4">
+            <svg className="w-8 h-8 text-[#1d4ed8]" stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24"><path d="M8 19v-4a4 4 0 018 0v4" /><rect x="5" y="11" width="14" height="7" rx="2" /><path d="M15 7a2 2 0 01-2-2V5a2 2 0 112 2z" /></svg>
+          </div>
+          <h3 className="font-bold text-xl mb-2 text-slate-900">Client Portal</h3>
+          <p className="text-slate-600 text-center">Delight your clients with a secure portal for updates, messaging, and document exchange. Transparency and trust, delivered.</p>
+        </motion.div>
+      </section>
+      {/* CTA Section */}
+      <section className="bg-[#1d4ed8] py-16 text-center text-white">
+        <motion.h2
+          className="text-3xl md:text-4xl font-bold mb-4 font-plex-sans"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Ready to transform your legal workflow?
+        </motion.h2>
+        <p className="text-lg mb-8 text-white/80">Join the LexiSuite community and experience the future of legal operations today.</p>
+        <Link to="/signup">
+          <Button id="cta-bottom-signup" className="bg-white text-[#1d4ed8] font-bold text-lg px-10 py-6 shadow-lg hover:bg-[#f1f5f9]">
+            Start Free Trial
+          </Button>
+        </Link>
+      </section>
     </div>
   );
 }

@@ -1,65 +1,61 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useState } from 'react';
+import { Mail } from 'lucide-react';
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setSubmitted(true); // fake successful submit
+  }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col py-20 px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-        className="max-w-2xl mx-auto bg-[#f8fafc] rounded-2xl shadow-lg p-10"
-      >
-        <h1 className="text-4xl font-bold text-[#1d4ed8] mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif', fontWeight: 700 }}>
-          Contact CasePilot
-        </h1>
-        <p className="mb-6 text-slate-700 text-lg" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
-          Have a question, feature request, or want to chat? The CasePilot team is standing by to help you chart a course to legal excellence.
-        </p>
-        {submitted ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-10"
-          >
-            <div className="flex justify-center mb-4">
-              <svg width="48" height="48" fill="none" stroke="#1d4ed8" strokeWidth="2.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
-            </div>
-            <h2 className="text-2xl font-bold text-[#1d4ed8] mb-2">Thank you!</h2>
-            <p className="text-slate-700">We'll follow up soon. Meanwhile, keep those cases moving!</p>
-          </motion.div>
-        ) : (
-          <form
-            className="space-y-6"
-            onSubmit={e => {
-              e.preventDefault();
-              setSubmitted(true);
-            }}
-            autoComplete="off"
-          >
+    <div className="min-h-screen py-16 px-4 bg-[#f8fafc]">
+      <div className="max-w-xl mx-auto bg-white rounded-xl shadow p-8 border-t-4 border-[#1d4ed8]">
+        <motion.h1
+          className="text-4xl font-bold mb-4 text-[#1d4ed8] font-plex-sans flex items-center gap-2"
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
+          <Mail className="w-8 h-8" /> Contact LexiSuite
+        </motion.h1>
+        <p className="text-slate-600 mb-8">Questions? Feedback? The LexiSuite team is here to help. Drop us a message and our friendly legal tech specialists will respond promptly!</p>
+        {!submitted ? (
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <div>
-              <label htmlFor="contact-name" className="font-semibold mb-1 block text-[#1d4ed8]">Your Name</label>
-              <Input id="contact-name" type="text" required placeholder="e.g. Jordan Kim" className="bg-white" />
+              <label htmlFor="name" className="block mb-1 text-slate-700 font-semibold">Name</label>
+              <Input id="contact-name" name="name" value={form.name} onChange={handleChange} required placeholder="Your name" />
             </div>
             <div>
-              <label htmlFor="contact-email" className="font-semibold mb-1 block text-[#1d4ed8]">Email Address</label>
-              <Input id="contact-email" type="email" required placeholder="e.g. jordan@email.com" className="bg-white" />
+              <label htmlFor="email" className="block mb-1 text-slate-700 font-semibold">Email</label>
+              <Input id="contact-email" name="email" type="email" value={form.email} onChange={handleChange} required placeholder="you@lawfirm.com" />
             </div>
             <div>
-              <label htmlFor="contact-message" className="font-semibold mb-1 block text-[#1d4ed8]">Message</label>
-              <Textarea id="contact-message" required placeholder="How can we help?" className="bg-white min-h-[100px]" />
+              <label htmlFor="message" className="block mb-1 text-slate-700 font-semibold">Message</label>
+              <Textarea id="contact-message" name="message" value={form.message} onChange={handleChange} required placeholder="How can we help you?" rows={5} />
             </div>
-            <Button id="contact-submit" type="submit" className="bg-[#1d4ed8] text-lg px-8 py-6 w-full font-bold mt-2 hover:bg-blue-800">
-              Send Message
-            </Button>
+            <Button id="contact-submit" type="submit" className="bg-[#1d4ed8] text-white font-bold text-lg py-3 hover:bg-[#2563eb]">Send Message</Button>
           </form>
+        ) : (
+          <motion.div
+            className="flex flex-col items-center gap-2 mt-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <span className="text-green-600 font-bold text-xl">Thank you!</span>
+            <span className="text-slate-700">Your message has been sent. We'll be in touch soon.</span>
+          </motion.div>
         )}
-      </motion.div>
+      </div>
     </div>
   );
 }
