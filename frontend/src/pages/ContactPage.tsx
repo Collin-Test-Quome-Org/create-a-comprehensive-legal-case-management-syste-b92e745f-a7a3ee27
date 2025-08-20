@@ -1,74 +1,52 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 
 export function ContactPage() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<'idle'|'sent'>('idle');
   const [form, setForm] = useState({ name: '', email: '', message: '' });
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) {
     setForm(f => ({ ...f, [e.target.name]: e.target.value }));
   }
-
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSent(true);
-    setForm({ name: '', email: '', message: '' });
+    setTimeout(() => setStatus('sent'), 800);
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-10 pb-20">
-      <div className="max-w-lg mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-        >
-          <Card className="shadow-xl">
-            <CardHeader>
-              <CardTitle className="text-3xl font-bold text-[#1d4ed8]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
-                Contact LegalEase
-              </CardTitle>
-              <p className="text-slate-600 mt-1">Our support team is standing by to help your firm thrive.</p>
-            </CardHeader>
-            <CardContent>
-              <form className="space-y-4" onSubmit={handleSubmit}>
-                <div>
-                  <label htmlFor="contact-name" className="block text-slate-700 font-semibold mb-1">Name</label>
-                  <Input id="contact-name" name="name" value={form.name} onChange={handleChange} required autoComplete="name" />
-                </div>
-                <div>
-                  <label htmlFor="contact-email" className="block text-slate-700 font-semibold mb-1">Email</label>
-                  <Input id="contact-email" name="email" type="email" value={form.email} onChange={handleChange} required autoComplete="email" />
-                </div>
-                <div>
-                  <label htmlFor="contact-message" className="block text-slate-700 font-semibold mb-1">Message</label>
-                  <Textarea id="contact-message" name="message" rows={5} value={form.message} onChange={handleChange} required />
-                </div>
-                <Button type="submit" id="contact-submit-btn" className="bg-[#1d4ed8] text-white font-bold w-full py-2 mt-3 hover:bg-[#1e40af]">
-                  Send Message
-                </Button>
-                {sent && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-green-600 font-semibold text-center mt-2"
-                  >
-                    Message sent! We'll be in touch soon.
-                  </motion.div>
-                )}
-              </form>
-              <div className="mt-8 text-slate-500 text-xs text-center">
-                Or email us anytime: <span className="text-[#1d4ed8]">support@legaleaseapp.com</span>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </div>
+    <div className="min-h-[60vh] bg-slate-50 py-16 flex items-center justify-center">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-xl w-full bg-white shadow-lg rounded-lg p-10 border-t-4 border-[#1d4ed8]"
+      >
+        <h1 className="text-3xl font-bold mb-6 text-[#1d4ed8] font-[700]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+          Contact LegalEase Support
+        </h1>
+        {status === 'sent' ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-green-700 bg-green-50 border border-green-200 rounded p-4 text-center font-semibold"
+          >
+            Thank you for reaching out! Our legal tech support team will be in touch.
+          </motion.div>
+        ) : (
+          <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+            <label htmlFor="contact-name" className="font-semibold">Name</label>
+            <Input id="contact-name" name="name" type="text" value={form.name} onChange={handleChange} required placeholder="Your Name" />
+            <label htmlFor="contact-email" className="font-semibold">Email</label>
+            <Input id="contact-email" name="email" type="email" value={form.email} onChange={handleChange} required placeholder="you@firm.com" />
+            <label htmlFor="contact-message" className="font-semibold">Message</label>
+            <Textarea id="contact-message" name="message" value={form.message} onChange={handleChange} required placeholder="How can we help?" rows={5} />
+            <Button id="contact-submit" className="bg-[#1d4ed8] text-white font-bold text-lg mt-2" type="submit">Send Message</Button>
+          </form>
+        )}
+      </motion.div>
     </div>
   );
 }
