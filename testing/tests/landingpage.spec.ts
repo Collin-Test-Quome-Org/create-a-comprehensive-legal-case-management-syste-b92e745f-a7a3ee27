@@ -1,4 +1,3 @@
-// Playwright test for LandingPage component
 import { test, expect } from '@playwright/test';
 
 test.describe('LandingPage', () => {
@@ -6,50 +5,56 @@ test.describe('LandingPage', () => {
     await page.goto('/');
   });
 
-  test('should display the Hero section', async ({ page }) => {
-    // The hero section should exist, but since Hero is imported, check for a main heading or unique feature
+  test('renders hero section', async ({ page }) => {
+    // The Hero component is included, but we don't know its content. Check for the main heading.
     await expect(page.locator('h1')).toBeVisible();
+    // Optionally, test for hero image background existence (using inline style)
+    await expect(page.locator('[style*="hero-0.png"]')).toBeVisible();
   });
 
-  test('should display the "Why Choose CaseCollab?" heading', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: /Why Choose CaseCollab/i })).toBeVisible();
-  });
-
-  test('should display all three feature cards', async ({ page }) => {
-    await expect(page.getByText('Effortless Collaboration')).toBeVisible();
-    await expect(page.getByText('Ironclad Security')).toBeVisible();
-    await expect(page.getByText('Lightning Fast')).toBeVisible();
-  });
-
-  test('feature cards should contain respective emoji icons', async ({ page }) => {
+  test('renders "Why Choose CaseCollab?" section and feature cards', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: /Why Choose CaseCollab/ })).toBeVisible();
+    const features = [
+      'Effortless Collaboration',
+      'Ironclad Security',
+      'Lightning Fast',
+    ];
+    for (const feature of features) {
+      await expect(page.getByRole('heading', { name: feature })).toBeVisible();
+    }
+    // Check for expected emoji
     await expect(page.getByText('📁')).toBeVisible();
     await expect(page.getByText('🔒')).toBeVisible();
     await expect(page.getByText('⚡')).toBeVisible();
   });
 
-  test('should display the CTA Start Collaborating Now button', async ({ page }) => {
-    const cta = page.getByRole('button', { name: /Start Collaborating Now/i });
-    await expect(cta).toBeVisible();
+  test('has CTA button that navigates to signup', async ({ page }) => {
+    const ctaBtn = page.locator('#cta-start-btn').getByRole('link', { name: /Start Collaborating Now/i });
+    await expect(ctaBtn).toBeVisible();
+    await ctaBtn.click();
+    await expect(page).toHaveURL('/signup');
   });
 
-  test('CTA button should navigate to /signup', async ({ page }) => {
-    await page.getByRole('button', { name: /Start Collaborating Now/i }).click();
-    await expect(page).toHaveURL(/\/signup$/);
-  });
-
-  test('should display the footer with CaseCollab logo and links', async ({ page }) => {
-    // Logo is an img inside the first div in footer
-    await expect(page.locator('footer img[src*="logo-2.png"]')).toBeVisible();
+  test('renders footer with logo, nav links, and copyright', async ({ page }) => {
+    // Logo in footer
+    await expect(page.locator('footer img[src="/branding/assets/logo-2.png"]')).toBeVisible();
     await expect(page.getByText('CaseCollab')).toBeVisible();
-    await expect(page.getByRole('link', { name: 'About' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Features' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Contact' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Login' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Sign Up' })).toBeVisible();
+    // Footer nav links
+    const footerLinks = ['About', 'Features', 'Contact', 'Login', 'Sign Up'];
+    for (const text of footerLinks) {
+      await expect(page.locator('footer').getByRole('link', { name: text })).toBeVisible();
+    }
+    // Copyright
+    const year = new Date().getFullYear();
+    await expect(page.getByText(`© ${year} CaseCollab. All rights reserved.`)).toBeVisible();
   });
 
-  test('footer copyright includes current year', async ({ page }) => {
-    const year = new Date().getFullYear().toString();
-    await expect(page.locator('footer')).toContainText(`© ${year} CaseCollab. All rights reserved.`);
+  test('basic accessibility: all links have discernible names', async ({ page }) => {
+    // All nav and footer links have visible text
+    const allLinks = await page.locator('a').all();
+    for (const link of allLinks) {
+      const name = await link.textContent();
+      expect(name && name.trim().length).toBeGreaterThan(0);
+    }
   });
 });
