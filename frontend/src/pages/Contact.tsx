@@ -1,53 +1,74 @@
-import { useState } from 'react';
+// Contact page for LexiFlow
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { useState } from 'react';
 
 export function Contact() {
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
 
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
   return (
-    <main className="min-h-screen bg-slate-50 py-16 px-4 flex flex-col items-center">
-      <motion.h1
-        className="text-4xl font-bold text-[#1d4ed8] mb-8 font-ibm-plex-sans"
-        initial={{ opacity: 0, y: -30 }}
+    <main className="max-w-lg mx-auto py-16 px-6">
+      <motion.header
+        initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.7 }}
+        className="mb-10 flex flex-col items-center"
       >
-        Contact LexiFlow
-      </motion.h1>
-      <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-lg flex flex-col gap-6">
+        <img src="/branding/assets/logo-1.png" className="w-16 h-16 mb-3" />
+        <h1 className="text-3xl font-bold text-blue-700 mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+          Contact LexiFlow
+        </h1>
+        <p className="text-slate-600 text-center">
+          Questions? Suggestions? Legal puns? Drop us a note—our team responds faster than you can say "objection!"
+        </p>
+      </motion.header>
+      <motion.form
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.15 }}
+        className="bg-white shadow-xl rounded-xl p-8 flex flex-col gap-5 border-t-4 border-blue-700"
+        onSubmit={onSubmit}
+      >
         {submitted ? (
-          <motion.div
-            className="flex flex-col items-center justify-center gap-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <span className="text-3xl text-[#1d4ed8]">
-              <svg width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-mail-check"><path d="m2 6 10 7 10-7"/><rect width="20" height="14" x="2" y="6" rx="2"/><path d="m16 19 2 2 4-4"/></svg>
-            </span>
-            <p className="text-lg font-semibold text-[#1d4ed8]">Thank you for reaching out!<br />
-            Our team will get back to you soon.</p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-blue-700">
+            <h2 className="text-xl font-bold mb-2">Thank you for reaching out!</h2>
+            <p>We'll get back to you soon. Until then, stay legally awesome.</p>
           </motion.div>
         ) : (
-          <form
-            className="flex flex-col gap-4"
-            onSubmit={e => {
-              e.preventDefault();
-              setSubmitted(true);
-            }}
-          >
-            <label htmlFor="contact-name" className="font-semibold mb-1 text-[#1d4ed8]">Name</label>
-            <Input id="contact-name" name="name" type="text" required className="mb-4" />
-            <label htmlFor="contact-email" className="font-semibold mb-1 text-[#1d4ed8]">Email</label>
-            <Input id="contact-email" name="email" type="email" required className="mb-4" />
-            <label htmlFor="contact-message" className="font-semibold mb-1 text-[#1d4ed8]">Message</label>
-            <Textarea id="contact-message" name="message" required rows={5} className="mb-4" />
-            <Button id="contact-submit" type="submit" className="bg-[#1d4ed8] text-white font-bold hover:bg-[#2563eb] mt-2">Send Message</Button>
-          </form>
+          <>
+            <label htmlFor="contact-name" className="font-semibold text-blue-700">
+              Name
+            </label>
+            <Input id="contact-name" name="name" value={form.name} onChange={onChange} required />
+
+            <label htmlFor="contact-email" className="font-semibold text-blue-700">
+              Email
+            </label>
+            <Input id="contact-email" name="email" type="email" value={form.email} onChange={onChange} required />
+
+            <label htmlFor="contact-message" className="font-semibold text-blue-700">
+              Message
+            </label>
+            <Textarea id="contact-message" name="message" value={form.message} onChange={onChange} required rows={4} />
+
+            <Button id="contact-submit" type="submit" className="mt-4 bg-blue-700 text-white hover:bg-blue-900">
+              Send Message
+            </Button>
+          </>
         )}
-      </div>
+      </motion.form>
     </main>
   );
 }
