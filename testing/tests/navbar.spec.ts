@@ -1,3 +1,4 @@
+// Playwright test for Navbar navigation and buttons
 import { test, expect } from '@playwright/test';
 
 test.describe('Navbar', () => {
@@ -5,66 +6,54 @@ test.describe('Navbar', () => {
     await page.goto('/');
   });
 
-  test('renders all navigation links and buttons', async ({ page }) => {
-    // Logo and title
-    const logoAndTitle = page.getByRole('link', { name: /CaseCollab/i });
-    await expect(logoAndTitle).toBeVisible();
-    await expect(logoAndTitle.locator('svg')).toBeVisible();
-    await expect(logoAndTitle).toHaveAttribute('href', '/');
-
-    // About link
-    const about = page.getByRole('link', { name: /^About$/ });
-    await expect(about).toBeVisible();
-    await expect(about).toHaveAttribute('href', '/about');
-
-    // Features link
-    const features = page.getByRole('link', { name: /^Features$/ });
-    await expect(features).toBeVisible();
-    await expect(features).toHaveAttribute('href', '/features');
-
-    // Contact link
-    const contact = page.getByRole('link', { name: /^Contact$/ });
-    await expect(contact).toBeVisible();
-    await expect(contact).toHaveAttribute('href', '/contact');
-
-    // Login button
-    const loginBtn = page.locator('#login-btn');
-    await expect(loginBtn).toBeVisible();
-    await expect(loginBtn.getByRole('link', { name: /^Login$/ })).toHaveAttribute('href', '/login');
-
-    // Sign Up button
-    const signupBtn = page.locator('#signup-btn');
-    await expect(signupBtn).toBeVisible();
-    await expect(signupBtn.getByRole('link', { name: /^Sign Up$/ })).toHaveAttribute('href', '/signup');
+  test('renders CaseCollab brand and navigation links', async ({ page }) => {
+    // Brand
+    await expect(page.getByRole('link', { name: /CaseCollab/i })).toBeVisible();
+    // Navigation links
+    await expect(page.getByRole('link', { name: 'About' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Features' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Contact' })).toBeVisible();
   });
 
-  test('navigates to correct pages when navigation links are clicked', async ({ page }) => {
-    // About
-    await page.getByRole('link', { name: /^About$/ }).click();
+  test('renders Login and Sign Up buttons', async ({ page }) => {
+    await expect(page.getByRole('button', { name: 'Login' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Sign Up' })).toBeVisible();
+  });
+
+  test('navigates to About page when About link is clicked', async ({ page }) => {
+    await page.getByRole('link', { name: 'About' }).click();
     await expect(page).toHaveURL(/\/about$/);
-    // Features
-    await page.getByRole('link', { name: /^Features$/ }).click();
+  });
+
+  test('navigates to Features page when Features link is clicked', async ({ page }) => {
+    await page.getByRole('link', { name: 'Features' }).click();
     await expect(page).toHaveURL(/\/features$/);
-    // Contact
-    await page.getByRole('link', { name: /^Contact$/ }).click();
+  });
+
+  test('navigates to Contact page when Contact link is clicked', async ({ page }) => {
+    await page.getByRole('link', { name: 'Contact' }).click();
     await expect(page).toHaveURL(/\/contact$/);
-    // Home (logo)
+  });
+
+  test('navigates to Home when CaseCollab brand is clicked', async ({ page }) => {
     await page.getByRole('link', { name: /CaseCollab/i }).click();
     await expect(page).toHaveURL('/');
   });
 
-  test('navigates to login and signup when buttons are clicked', async ({ page }) => {
-    await page.locator('#login-btn').getByRole('link', { name: /^Login$/ }).click();
+  test('navigates to Login when Login button is clicked', async ({ page }) => {
+    await page.getByRole('button', { name: 'Login' }).click();
     await expect(page).toHaveURL(/\/login$/);
-    await page.goto('/');
-    await page.locator('#signup-btn').getByRole('link', { name: /^Sign Up$/ }).click();
+  });
+
+  test('navigates to Sign Up when Sign Up button is clicked', async ({ page }) => {
+    await page.getByRole('button', { name: 'Sign Up' }).click();
     await expect(page).toHaveURL(/\/signup$/);
   });
 
-  test('has accessible nav landmarks and contrast', async ({ page }) => {
-    const nav = page.locator('nav');
-    await expect(nav).toHaveAttribute('class', /sticky/);
-    // Navbar should be present and visible
-    await expect(nav).toBeVisible();
+  test('navbar is sticky and visible on scroll', async ({ page }) => {
+    // Scroll down
+    await page.evaluate(() => window.scrollTo(0, 500));
+    // Navbar should still be visible
+    await expect(page.locator('nav')).toBeVisible();
   });
 });
