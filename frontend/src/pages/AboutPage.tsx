@@ -1,51 +1,84 @@
 import { motion } from 'framer-motion';
+import { Users, ShieldCheck, Lightbulb } from 'lucide-react';
 
 export function AboutPage() {
   return (
-    <main className="max-w-4xl mx-auto px-4 py-16">
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-4xl font-bold text-[#1d4ed8] mb-4 font-[700]"
-        style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
-      >
-        The CaseCollab Story
-      </motion.h1>
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.7 }}
-        className="text-lg text-slate-700 mb-6 font-[400]"
-        style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
-      >
-        CaseCollab is powered by a team of passionate legal technologists and ex-practitioners who believe in making law firm operations as smooth as silk. Our mission is to empower law firms with secure, collaborative, and ultra-efficient tools—so you can focus on advocacy, not admin.
-      </motion.p>
-      <motion.div
-        initial={{ opacity: 0, x: 30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.4, duration: 0.5 }}
-        className="bg-white rounded-xl shadow-md p-8 border border-slate-100 mb-6"
-      >
-        <h2 className="font-bold text-2xl mb-3 text-[#1d4ed8]">Our Values</h2>
-        <ul className="space-y-2 text-slate-700 list-disc ml-6">
-          <li>Privacy and security above all else</li>
-          <li>Collaboration breeds success</li>
-          <li>Modern, elegant, and accessible design</li>
-          <li>Compliance, transparency, and trust</li>
-        </ul>
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, x: -30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
-        className="rounded-lg p-6 bg-[#1d4ed8] bg-opacity-5"
-      >
-        <h3 className="font-bold text-lg text-[#1d4ed8] mb-2">Our Promise</h3>
-        <p className="text-slate-700">
-          From solo attorneys to global firms, we pledge to deliver tools that are intuitive, reliable, and above all—secure. At CaseCollab, your clients' trust is our foundation, and your productivity is our passion.
-        </p>
-      </motion.div>
-    </main>
+    <div className="min-h-screen bg-white font-sans">
+      <section className="max-w-4xl mx-auto px-4 py-16">
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="text-4xl font-bold text-[#1d4ed8] text-center mb-8"
+          style={{ fontFamily: 'IBM Plex Sans, sans-serif', fontWeight: 700 }}
+        >
+          About LegalEase Case Manager
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.7 }}
+          className="text-slate-700 mb-8 text-lg text-center max-w-2xl mx-auto"
+          style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
+        >
+          At LegalEase, we're on a mission to empower law firms to serve their clients with greater efficiency, security, and peace of mind. Our platform is designed by legal professionals, for legal professionals—bringing every case, client, and deadline into perfect focus.
+        </motion.p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <AboutCard
+            icon={<Users className="w-10 h-10 text-[#1d4ed8] mx-auto" />}
+            title="For Modern Law Firms"
+            text="Built for teams who value productivity and collaboration. Streamline your workflow, empower staff, and deliver results."
+          />
+          <AboutCard
+            icon={<ShieldCheck className="w-10 h-10 text-[#1d4ed8] mx-auto" />}
+            title="Ironclad Privacy"
+            text="We prioritize client confidentiality. Our security is woven into every layer—ensuring compliance and trust."
+          />
+          <AboutCard
+            icon={<Lightbulb className="w-10 h-10 text-[#1d4ed8] mx-auto" />}
+            title="Relentless Innovation"
+            text="LegalEase is always evolving. We listen to our users and continuously deliver features that make a difference."
+          />
+        </div>
+        <div className="mt-14 text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-2xl font-bold text-[#1d4ed8] mb-4"
+            style={{ fontFamily: 'IBM Plex Sans, sans-serif', fontWeight: 700 }}
+          >
+            Our Company Voice
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-slate-600 max-w-xl mx-auto"
+            style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
+          >
+            <span className="italic">"At LegalEase, we believe that justice should run like clockwork—efficient, secure, and always client-focused. We exist to take the burden of administration off your plate, so your legal team can do what it does best: win for your clients. Welcome to a new era of legal case management—built for trust, built for speed, built for you."</span>
+          </motion.p>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function AboutCard({ icon, title, text }: { icon: React.ReactNode; title: string; text: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
+      className="bg-slate-50 rounded-lg shadow-md p-8 flex flex-col items-center border-t-4 border-[#1d4ed8] hover:shadow-xl transition-shadow"
+    >
+      <div className="mb-4">{icon}</div>
+      <h3 className="font-bold text-lg mb-2 text-center" style={{ fontFamily: 'IBM Plex Sans, sans-serif', fontWeight: 700 }}>{title}</h3>
+      <p className="text-slate-600 text-center" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>{text}</p>
+    </motion.div>
   );
 }
