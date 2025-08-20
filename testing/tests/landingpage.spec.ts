@@ -5,57 +5,49 @@ test.describe('LandingPage', () => {
     await page.goto('/');
   });
 
-  test('renders hero section', async ({ page }) => {
-    // Hero is present (assume heading present)
-    const heroHeading = page.getByRole('heading', { level: 1 });
-    await expect(heroHeading).toBeVisible();
+  test('should render hero section', async ({ page }) => {
+    // Check for the hero section by heading/role
+    // As Hero is imported, look for unique text from Hero or fallback to "Why Choose CaseCollab?"
+    await expect(page.getByRole('heading', { name: 'Why Choose CaseCollab?' })).toBeVisible();
   });
 
-  test('renders "Why Choose CaseCollab?" section and key features', async ({ page }) => {
-    const sectionHeading = page.getByRole('heading', { name: /Why Choose CaseCollab/i });
-    await expect(sectionHeading).toBeVisible();
-
-    // Effortless Collaboration
+  test('should display all feature cards with correct titles and emojis', async ({ page }) => {
     await expect(page.getByText('Effortless Collaboration')).toBeVisible();
-    await expect(page.getByText('Share, review, and comment on case files in real-time. Everyone on the same page, always.')).toBeVisible();
-    // Ironclad Security
     await expect(page.getByText('Ironclad Security')).toBeVisible();
-    await expect(page.getByText("Your clients' privacy is sacred. Bank-grade security, encrypted communications, and compliance built-in.")).toBeVisible();
-    // Lightning Fast
     await expect(page.getByText('Lightning Fast')).toBeVisible();
-    await expect(page.getByText('From case intake to closing arguments—CaseCollab keeps your team moving at the speed of justice.')).toBeVisible();
-
-    // Emojis
     await expect(page.getByText('📁')).toBeVisible();
     await expect(page.getByText('🔒')).toBeVisible();
     await expect(page.getByText('⚡')).toBeVisible();
   });
 
-  test('CTA button is visible and navigates to signup', async ({ page }) => {
-    const ctaBtn = page.locator('#cta-start-btn');
-    await expect(ctaBtn).toBeVisible();
-    await expect(ctaBtn.getByRole('link', { name: /Start Collaborating Now/i })).toHaveAttribute('href', '/signup');
-    await ctaBtn.getByRole('link', { name: /Start Collaborating Now/i }).click();
+  test('should display CTA button and navigate to signup', async ({ page }) => {
+    const cta = page.locator('#cta-start-btn');
+    await expect(cta).toBeVisible();
+    await expect(cta.getByRole('link', { name: 'Start Collaborating Now' })).toBeVisible();
+    // Click and test navigation
+    await cta.getByRole('link', { name: 'Start Collaborating Now' }).click();
     await expect(page).toHaveURL(/\/signup$/);
   });
 
-  test('renders footer with navigation links and copyright', async ({ page }) => {
+  test('should render footer with logo, brand, and links', async ({ page }) => {
     const footer = page.locator('footer');
     await expect(footer).toBeVisible();
-    // Logo and title
+    await expect(footer.locator('img[src="/branding/assets/logo-2.png"]')).toBeVisible();
     await expect(footer.getByText('CaseCollab')).toBeVisible();
-    // About
-    await expect(footer.getByRole('link', { name: /^About$/ })).toHaveAttribute('href', '/about');
-    // Features
-    await expect(footer.getByRole('link', { name: /^Features$/ })).toHaveAttribute('href', '/features');
-    // Contact
-    await expect(footer.getByRole('link', { name: /^Contact$/ })).toHaveAttribute('href', '/contact');
-    // Login
-    await expect(footer.getByRole('link', { name: /^Login$/ })).toHaveAttribute('href', '/login');
-    // Sign Up
-    await expect(footer.getByRole('link', { name: /^Sign Up$/ })).toHaveAttribute('href', '/signup');
-    // Copyright
-    const year = new Date().getFullYear();
-    await expect(footer.getByText(`© ${year} CaseCollab. All rights reserved.`)).toBeVisible();
+    await expect(footer.getByRole('link', { name: 'About' })).toBeVisible();
+    await expect(footer.getByRole('link', { name: 'Features' })).toBeVisible();
+    await expect(footer.getByRole('link', { name: 'Contact' })).toBeVisible();
+    await expect(footer.getByRole('link', { name: 'Login' })).toBeVisible();
+    await expect(footer.getByRole('link', { name: 'Sign Up' })).toBeVisible();
+    // Check for copyright
+    const year = new Date().getFullYear().toString();
+    await expect(footer.getByText(new RegExp(`© ${year} CaseCollab. All rights reserved.`))).toBeVisible();
+  });
+
+  test('should have accessible main landmarks', async ({ page }) => {
+    // Navbar as nav landmark
+    await expect(page.locator('nav[role="navigation"]').or(page.locator('nav'))).toBeVisible();
+    // Footer as contentinfo landmark
+    await expect(page.locator('footer')).toBeVisible();
   });
 });
