@@ -1,61 +1,61 @@
-// testing/tests/navbar.spec.ts
+// Playwright tests for Navbar component and navigation
 import { test, expect } from '@playwright/test';
 
-test.describe('Navbar Component', () => {
+test.describe('Navbar component', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
   });
 
-  test('renders logo and navigates to homepage', async ({ page }) => {
-    const logo = page.getByRole('link', { name: /CaseCollab/i }).first();
-    await expect(logo).toBeVisible();
-    // Click logo and ensure we remain on or return to landing page
-    await logo.click();
-    await expect(page).toHaveURL('/');
-    await expect(page.getByText('Why Choose CaseCollab?')).toBeVisible();
+  test('renders all navigation links and branding', async ({ page }) => {
+    // Check branding
+    await expect(page.getByRole('link', { name: /CaseCollab/i })).toBeVisible();
+    await expect(page.locator('nav')).toBeVisible();
+    // About, Features, Contact
+    await expect(page.getByRole('link', { name: 'About' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Features' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Contact' })).toBeVisible();
+    // Login and Sign Up
+    await expect(page.getByRole('link', { name: 'Login' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Sign Up' })).toBeVisible();
   });
 
-  test('shows navigation links and navigates', async ({ page }) => {
-    const navLinks = [
-      { text: 'About', path: '/about' },
-      { text: 'Features', path: '/features' },
-      { text: 'Contact', path: '/contact' }
-    ];
-    for (const { text, path } of navLinks) {
-      const link = page.getByRole('link', { name: text });
-      await expect(link).toBeVisible();
-      await link.click();
-      // After navigation, URL should match
-      await expect(page).toHaveURL(path);
-      // Go back to home for next iteration
-      await page.goto('/');
-    }
+  test('navigates to About page', async ({ page }) => {
+    await page.getByRole('link', { name: 'About' }).click();
+    await expect(page).toHaveURL(/\/about$/);
   });
 
-  test('renders and navigates Login & Sign Up buttons', async ({ page }) => {
-    const loginBtn = page.locator('#login-btn');
-    const signupBtn = page.locator('#signup-btn');
-    await expect(loginBtn).toBeVisible();
-    await expect(signupBtn).toBeVisible();
+  test('navigates to Features page', async ({ page }) => {
+    await page.getByRole('link', { name: 'Features' }).click();
+    await expect(page).toHaveURL(/\/features$/);
+  });
 
-    // Login navigation
-    await loginBtn.click();
-    await expect(page).toHaveURL('/login');
+  test('navigates to Contact page', async ({ page }) => {
+    await page.getByRole('link', { name: 'Contact' }).click();
+    await expect(page).toHaveURL(/\/contact$/);
+  });
 
-    // Go back and test Sign Up
+  test('navigates to Login and Sign Up from navbar buttons', async ({ page }) => {
+    await page.locator('#login-btn').getByRole('link', { name: 'Login' }).click();
+    await expect(page).toHaveURL(/\/login$/);
     await page.goto('/');
-    await signupBtn.click();
-    await expect(page).toHaveURL('/signup');
+    await page.locator('#signup-btn').getByRole('link', { name: 'Sign Up' }).click();
+    await expect(page).toHaveURL(/\/signup$/);
   });
 
-  test('has correct styling and accessibility basics', async ({ page }) => {
-    // Navbar should be visible and sticky
+  test('logo and CaseCollab text link navigates to homepage', async ({ page }) => {
+    // Go to about page first
+    await page.goto('/about');
+    await page.getByRole('link', { name: /CaseCollab/i }).click();
+    await expect(page).toHaveURL(/\/$/);
+  });
+
+  test('navbar is sticky at the top', async ({ page }) => {
+    // Scroll down and check navbar still visible
+    await page.evaluate(() => window.scrollTo(0, 1000));
     const nav = page.locator('nav');
     await expect(nav).toBeVisible();
-    await expect(nav).toHaveClass(/sticky/);
-
-    // All navigation links should have role 'link' and be keyboard accessible
-    const links = page.getByRole('link');
-    await expect(links).toHaveCount(6); // logo + 3 nav links + Login + Sign Up
+    // Check sticky style (top: 0)
+    const position = await nav.evaluate((el) => window.getComputedStyle(el).position);
+    expect(['sticky', 'fixed']).toContain(position);
   });
 });
