@@ -1,50 +1,54 @@
 import { motion } from 'framer-motion';
+import { Scale } from 'lucide-react';
 
 export function AboutPage() {
   return (
-    <main className="min-h-screen bg-slate-50 py-12 px-4">
-      <section className="max-w-4xl mx-auto">
-        <motion.h1
-          className="text-4xl md:text-5xl font-bold mb-6 text-[#1d4ed8] text-center" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
+    <main className="min-h-screen bg-slate-50 pt-10 pb-20">
+      <div className="max-w-4xl mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="flex flex-col md:flex-row gap-8 items-center mb-10"
+        >
+          <img src="/branding/assets/logo-0.png" className="w-24 h-24 md:w-32 md:h-32" />
+          <div>
+            <h1 className="text-4xl font-bold text-[#1d4ed8] mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+              Meet LegalEase Case Manager
+            </h1>
+            <p className="text-slate-700 text-lg mb-2 font-[400]">
+              Modern legal work deserves more than spreadsheets and email chains. LegalEase Case Manager is the all-in-one cloud platform designed to streamline your practice, empower your team, and protect your clients—so you can focus on what matters most: justice.
+            </p>
+          </div>
+        </motion.div>
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ delay: 0.15, duration: 0.7 }}
+          className="prose prose-slate max-w-none text-slate-700 bg-white rounded-xl p-8 shadow"
         >
-          Who is CaseCollab?
-        </motion.h1>
-        <motion.p
-          className="text-lg text-slate-700 text-center max-w-2xl mx-auto mb-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.7 }}
-          style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
-        >
-          CaseCollab is your firm’s digital command center. We’re the friendly but fiercely secure legal tech partner designed to make your cases—and your team—run like clockwork. Our platform is built by legal professionals for legal professionals, with a mission to make legal work less stressful, more organized, and always compliant.
-        </motion.p>
-        <div className="flex flex-col md:flex-row gap-8 mt-10">
-          <motion.div
-            className="bg-white rounded-xl shadow-md p-6 flex-1 border-t-4 border-[#1d4ed8]"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            <h2 className="font-semibold text-xl mb-2 text-[#1d4ed8]">Our Mission</h2>
-            <p className="text-slate-600">We empower law firms of all sizes to serve clients better, work smarter, and stay ahead of deadlines—without sacrificing security or control.</p>
-          </motion.div>
-          <motion.div
-            className="bg-white rounded-xl shadow-md p-6 flex-1 border-t-4 border-[#94a3b8]"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-          >
-            <h2 className="font-semibold text-xl mb-2 text-[#1d4ed8]">Our Voice</h2>
-            <p className="text-slate-600">Professional, efficient, and welcoming. We believe legal tech should work for you—never against you. We cut the jargon and bring a human touch to every pixel.</p>
-          </motion.div>
-        </div>
-        <div className="mt-12 text-center">
-          <span className="inline-block bg-[#e0e7ff] text-[#1d4ed8] font-mono px-4 py-2 rounded-full text-sm font-semibold">CaseCollab: Where Security Meets Simplicity</span>
-        </div>
-      </section>
+          <h2 className="text-[#1d4ed8] font-bold mb-2">Our Mission</h2>
+          <p>
+            LegalEase believes every law firm—big or small—deserves secure, intuitive, and powerful tools. We’re passionate about making legal operations seamless, so attorneys and staff can serve clients with confidence and clarity.
+          </p>
+          <h2 className="text-[#1d4ed8] font-bold mb-2 mt-8">What Makes Us Different?</h2>
+          <ul className="list-disc pl-6">
+            <li>
+              <b>Human-Centric Design:</b> We obsess over details, ensuring every feature fits the real workflow of modern legal teams.
+            </li>
+            <li>
+              <b>Bank-Grade Security:</b> Your data is protected at every layer, with encryption, strict access controls, and compliance you can trust.
+            </li>
+            <li>
+              <b>Rapid, Reliable Support:</b> Our team is here for you—offering onboarding, live support, and ongoing training.
+            </li>
+          </ul>
+          <h2 className="text-[#1d4ed8] font-bold mb-2 mt-8">Who We Serve</h2>
+          <p>
+            Law firms, solo practitioners, in-house legal teams, and their clients—all benefit from LegalEase’s collaborative, secure, and future-proof platform. Whether you’re handling high-stakes litigation or everyday legal matters, LegalEase is your partner for efficiency and peace of mind.
+          </p>
+        </motion.div>
+      </div>
     </main>
   );
 }
