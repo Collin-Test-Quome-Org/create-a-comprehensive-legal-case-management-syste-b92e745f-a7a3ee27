@@ -4,6 +4,7 @@ import { LandingPage } from '@/pages/LandingPage';
 import { AboutPage } from '@/pages/AboutPage';
 import { FeaturesPage } from '@/pages/FeaturesPage';
 import { ContactPage } from '@/pages/ContactPage';
+import { NotFoundPage } from '@/pages/NotFoundPage';
 
 export function App() {
   return (
@@ -14,6 +15,7 @@ export function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/features" element={<FeaturesPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );

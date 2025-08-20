@@ -1,96 +1,81 @@
 import { motion } from 'framer-motion';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ShieldCheck, CalendarClock, FolderKanban, Users, MessageSquare, FileText, Clock, DollarSign, Lock, UserCheck } from 'lucide-react';
+import { ShieldCheck, Calendar, FileText, Users, MessageCircle, Clock, DollarSign } from 'lucide-react';
+
+const features = [
+  {
+    icon: <ShieldCheck className="w-8 h-8 text-[#1d4ed8]" />,
+    title: 'Bank-Grade Security',
+    desc: 'End-to-end encryption, role-based access, and compliance-first architecture keep your firm and clients protected.'
+  },
+  {
+    icon: <Calendar className="w-8 h-8 text-[#1d4ed8]" />,
+    title: 'Calendar & Deadlines',
+    desc: 'Never miss a court date or deadline again. Automated reminders and firm-wide scheduling at your fingertips.'
+  },
+  {
+    icon: <FileText className="w-8 h-8 text-[#1d4ed8]" />,
+    title: 'Document Management',
+    desc: 'Secure uploads, versioning, sharing, and audit trails for every case. Keep discovery organized and accessible.'
+  },
+  {
+    icon: <Users className="w-8 h-8 text-[#1d4ed8]" />,
+    title: 'Team Collaboration',
+    desc: 'Assign tasks, track workflow, and work in tandem with paralegals, admins, and clients—all in one place.'
+  },
+  {
+    icon: <MessageCircle className="w-8 h-8 text-[#1d4ed8]" />,
+    title: 'Secure Messaging',
+    desc: 'Keep client communication confidential with built-in encrypted messaging and logs.'
+  },
+  {
+    icon: <Clock className="w-8 h-8 text-[#1d4ed8]" />,
+    title: 'Time Tracking & Billing',
+    desc: 'Integrated time entry, expenses, and invoice generation. Bill with confidence and clarity.'
+  },
+  {
+    icon: <DollarSign className="w-8 h-8 text-[#1d4ed8]" />,
+    title: 'Expense & Invoice Management',
+    desc: 'Track expenses, generate branded invoices, and keep your cashflow transparent and efficient.'
+  },
+];
 
 export function FeaturesPage() {
-  const features = [
-    {
-      icon: <ShieldCheck className="w-8 h-8 text-[#1d4ed8] mb-2" />, title: 'Secure Client Portal',
-      desc: 'Share files and communicate with clients securely, with full encryption and privilege compliance.'
-    },
-    {
-      icon: <CalendarClock className="w-8 h-8 text-[#1d4ed8] mb-2" />, title: 'Deadline & Calendar Management',
-      desc: 'Track deadlines, court dates, and get automated reminders. Never miss a key date again.'
-    },
-    {
-      icon: <FolderKanban className="w-8 h-8 text-[#1d4ed8] mb-2" />, title: 'Case File Organization',
-      desc: 'Centralize case documents, notes, and correspondence for instant team access.'
-    },
-    {
-      icon: <Users className="w-8 h-8 text-[#1d4ed8] mb-2" />, title: 'Team Workflows',
-      desc: 'Assign tasks, monitor progress, and streamline collaboration among attorneys, paralegals, and staff.'
-    },
-    {
-      icon: <MessageSquare className="w-8 h-8 text-[#1d4ed8] mb-2" />, title: 'Secure Messaging',
-      desc: 'Maintain privileged client communications and internal logs – all in one protected place.'
-    },
-    {
-      icon: <FileText className="w-8 h-8 text-[#1d4ed8] mb-2" />, title: 'Document Management',
-      desc: 'Upload, version, and share documents with robust search and powerful audit trail.'
-    },
-    {
-      icon: <Clock className="w-8 h-8 text-[#1d4ed8] mb-2" />, title: 'Time Tracking & Billing',
-      desc: 'Track billable hours, expenses, and generate invoices with ease.'
-    },
-    {
-      icon: <DollarSign className="w-8 h-8 text-[#1d4ed8] mb-2" />, title: 'Expense Tracking',
-      desc: 'Log expenses and bill clients transparently. Generate professional invoices instantly.'
-    },
-    {
-      icon: <Lock className="w-8 h-8 text-[#1d4ed8] mb-2" />, title: 'Encrypted Storage',
-      desc: 'All data is encrypted to uphold attorney-client privilege and compliance.'
-    },
-    {
-      icon: <UserCheck className="w-8 h-8 text-[#1d4ed8] mb-2" />, title: 'Role-Based Access',
-      desc: 'Grant permissions by role (attorney, paralegal, admin, client) for secure, streamlined operations.'
-    }
-  ];
   return (
-    <div className="min-h-screen bg-slate-50 pb-20">
-      <div className="w-full bg-[#1d4ed8] bg-gradient-to-br from-[#1d4ed8] to-[#94a3b8] text-white py-20 mb-10">
-        <div className="max-w-5xl mx-auto px-4 text-center">
-          <motion.h1
-            className="text-4xl md:text-5xl font-bold mb-3"
-            style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
-            initial={{ opacity: 0, y: -24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-          >
-            The Complete Legal Case Management Suite
-          </motion.h1>
-          <motion.p
-            className="text-lg md:text-xl mb-4 text-slate-100 opacity-95"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.35 }}
-          >
-            Everything your firm needs to win cases, serve clients, and run efficiently—securely, and all in one place.
-          </motion.p>
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <main className="min-h-screen bg-slate-50 py-14 px-4">
+      <motion.h1
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7 }}
+        className="text-4xl font-[700] text-[#1d4ed8] mb-5 text-center"
+        style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
+      >
+        Explore the Features of CaseCollab
+      </motion.h1>
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.6 }}
+        className="text-lg text-slate-700 mb-12 text-center font-[400]"
+        style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
+      >
+        Designed for legal professionals who demand the best in security, collaboration, and productivity. CaseCollab elevates your firm with every click.
+      </motion.p>
+      <section className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
         {features.map((f, i) => (
           <motion.div
             key={f.title}
+            className="bg-white rounded-xl shadow-md border-t-4 border-[#1d4ed8] p-6 flex flex-col items-center text-center min-h-[220px]"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 + i * 0.08, duration: 0.5 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.08 * i }}
           >
-            <Card className="h-full hover:shadow-2xl hover:scale-105 transition-transform border-t-4 border-[#1d4ed8]">
-              <CardHeader className="flex flex-col items-center justify-center">
-                {f.icon}
-                <CardTitle className="text-xl text-[#1d4ed8] font-bold mt-1 mb-2 text-center">
-                  {f.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center text-slate-600 pb-6">
-                {f.desc}
-              </CardContent>
-            </Card>
+            <div className="mb-4">{f.icon}</div>
+            <h3 className="font-bold text-lg mb-2 text-[#1d4ed8]">{f.title}</h3>
+            <p className="text-slate-600 text-base">{f.desc}</p>
           </motion.div>
         ))}
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
